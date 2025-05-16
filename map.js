@@ -8,7 +8,7 @@ console.log('Mapbox GL JS Loaded:', mapboxgl);
 mapboxgl.accessToken = 'pk.eyJ1Ijoic2FtbGF1OTUiLCJhIjoiY2xzOXZ2NTdqMGFwaDJqcDZ2eDQ0b2w0eSJ9.emlu4JkbjlBBE9bEay1_8A';
 const INPUT_BLUEBIKES_CSV_URL = 'https://dsc106.com/labs/lab07/data/bluebikes-stations.json';
 const TRAFFIC_CSV_URL = 'https://dsc106.com/labs/lab07/data/bluebikes-traffic-2024-03.csv';
-let timeFilter = -1; // 默认不筛选
+let timeFilter = -1;
 
 // Initialize map
 const map = new mapboxgl.Map({
@@ -27,8 +27,8 @@ function getCoords(station) {
   return { cx: x, cy: y };
 }
 function formatTime(minutes) {
-  const date = new Date(0, 0, 0, 0, minutes); // 设置小时和分钟
-  return date.toLocaleString('en-US', { timeStyle: 'short' }); // 返回格式如 "11:59 PM"
+  const date = new Date(0, 0, 0, 0, minutes); 
+  return date.toLocaleString('en-US', { timeStyle: 'short' }); 
 }
 
 function computeStationTraffic(stations, trips) {
@@ -144,6 +144,7 @@ map.on('load', async () => {
     .domain([0, d3.max(stations, d => d.totalTraffic)])
     .range([0, 25]);
 
+  let stationFlow = d3.scaleQuantize().domain([0, 1]).range([0, 0.5, 1]);
   const circles = svgLayer.selectAll('circle')
     .data(stations, (d) => d.short_name)
     .enter()
@@ -157,7 +158,10 @@ map.on('load', async () => {
       d3.select(this)
         .append('title')
         .text(`${d.totalTraffic} trips (${d.departures} departures, ${d.arrivals} arrivals)`);
-    });
+    })
+    .style('--departure-ratio', (d) =>
+      stationFlow(d.departures / d.totalTraffic),
+    );
 
   function updatePositions() {
     circles
@@ -203,7 +207,10 @@ map.on('load', async () => {
     circles
       .data(filteredStations, (d) => d.short_name)
       .join('circle') // Ensure the data is bound correctly
-      .attr('r', (d) => radiusScale(d.totalTraffic)); // Update circle sizes
+      .attr('r', (d) => radiusScale(d.totalTraffic))
+      .style('--departure-ratio', (d) =>
+        stationFlow(d.departures / d.totalTraffic),
+      );
   }
 
 

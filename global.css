@@ -16,17 +16,17 @@ header {
 }
 
 label {
-margin-left: auto;
+    margin-left: auto;
 }
 
 #selectedTime,
 #anyTime {
-display: block;
+    display: block;
 }
 
 #anyTime {
-color: #666;
-font-style: italic;
+    color: #666;
+    font-style: italic;
 }
   
 
@@ -35,45 +35,89 @@ font-style: italic;
     justify-content: space-between;
     align-items: flex-start;
     width: 100%;
-    margin-bottom: 1.5em; /* 加大与地图之间的垂直间距 */
-  }
+    margin-bottom: 1.5em; 
+}
 
   
-  .header-bar h1 {
+.header-bar h1 {
     margin: 0;
     font-size: 1.8em;
-  }
-  
-  header {
+}
+
+header {
     display: flex;
     flex-direction: column;
     align-items: flex-end;
     gap: 0.25em;
-  }
-  
-  .slider-row {
+}
+
+.slider-row {
     display: flex;
     align-items: center;
     gap: 0.5em;
-  }
-  .slider-row input[type="range"] {
+}
+.slider-row input[type="range"] {
     width: 350px;
-  }
-  
-  .time-display {
+}
+
+.time-display {
     text-align: right;
     font-size: 0.95em;
-  }
-  
-  #selected-time,
-  #any-time {
+}
+
+#selected-time,
+#any-time {
     display: block;
     margin: 0;
-  }
-  
-  #any-time {
+}
+
+#any-time {
     color: #666;
     font-style: italic;
-  }
+}
+
+.legend {
+    display: flex;
+    align-items: center;
+    gap: 2em;
+    font-size: 0.95em;
+    margin: 1.5em 0;
+    font-family: system-ui, sans-serif;
+    font-weight: 400;
+}
+
+.legend-label {
+    color: #8a94a6;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.4em;
+}
+
+.swatch {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+}
+
+
+.swatch-departures {
+    background-color: rgb(7, 139, 247); 
+}
+
+.swatch-balanced {
+    background-color: rgb(219, 42, 219);
+}
+
+.swatch-arrivals {
+    background-color: darkorange; 
+}
+  
+  
   
   
